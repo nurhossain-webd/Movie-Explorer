@@ -20,6 +20,10 @@
     @apply m-0 bg-zinc-950 font-sans text-zinc-100;
   }
 
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
   ::selection {
     @apply bg-amber-300 text-zinc-950;
   }

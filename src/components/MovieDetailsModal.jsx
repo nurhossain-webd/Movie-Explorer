@@ -14,6 +14,7 @@ function getSummaryText(summary) {
 
 function MovieDetailsModal({ show, onClose }) {
   const dialogRef = useRef(null)
+  const backdropPressed = useRef(false)
   const titleId = useId()
   const [imageFailed, setImageFailed] = useState(false)
   const name = show.name || 'Untitled show'
@@ -57,8 +58,15 @@ function MovieDetailsModal({ show, onClose }) {
           first.focus()
         }
       }}
+      onPointerDown={(event) => {
+        const bounds = event.currentTarget.getBoundingClientRect()
+        backdropPressed.current = event.clientX < bounds.left || event.clientX > bounds.right
+          || event.clientY < bounds.top || event.clientY > bounds.bottom
+      }}
       onClick={(event) => {
-        if (event.target === event.currentTarget) onClose()
+        // A drag that starts inside, or a click on the scrollbar, is not a backdrop click.
+        if (backdropPressed.current && event.target === event.currentTarget) onClose()
+        backdropPressed.current = false
       }}
       className="m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-4xl overflow-y-auto overscroll-contain rounded-2xl border border-white/15 bg-zinc-900 p-0 text-zinc-100 shadow-2xl backdrop:bg-black/80 backdrop:backdrop-blur-sm"
     >
@@ -79,7 +87,7 @@ function MovieDetailsModal({ show, onClose }) {
             {poster && !imageFailed ? (
               <img src={poster} alt={`${name} poster`} onError={() => setImageFailed(true)} className="size-full object-cover" />
             ) : (
-              <div className="flex h-full items-center justify-center bg-linear-to-br from-zinc-800 to-zinc-950 px-6 text-center text-sm text-zinc-500">
+              <div className="flex h-full items-center justify-center bg-linear-to-br from-zinc-800 to-zinc-950 px-6 text-center text-sm text-zinc-400">
                 Poster unavailable
               </div>
             )}
@@ -90,31 +98,31 @@ function MovieDetailsModal({ show, onClose }) {
             <h2 id={titleId} className="mt-3 text-3xl leading-tight font-bold tracking-tight wrap-anywhere sm:text-4xl">{name}</h2>
             <dl className="mt-6 grid grid-cols-2 gap-x-5 gap-y-5 text-sm">
               <div>
-                <dt className="text-zinc-500">Rating</dt>
+                <dt className="text-zinc-400">Rating</dt>
                 <dd className="mt-1 font-medium text-amber-300">{rating}{rating !== 'N/A' && ' / 10'}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Premiere date</dt>
+                <dt className="text-zinc-400">Premiere date</dt>
                 <dd className="mt-1 text-zinc-200">{show.premiered || 'N/A'}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Language</dt>
+                <dt className="text-zinc-400">Language</dt>
                 <dd className="mt-1 text-zinc-200 wrap-anywhere">{show.language || 'N/A'}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Status</dt>
+                <dt className="text-zinc-400">Status</dt>
                 <dd className="mt-1 text-zinc-200 wrap-anywhere">{show.status || 'N/A'}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Episode length</dt>
+                <dt className="text-zinc-400">Episode length</dt>
                 <dd className="mt-1 text-zinc-200">{runtime != null ? `${runtime} min` : 'N/A'}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Network</dt>
+                <dt className="text-zinc-400">Network</dt>
                 <dd className="mt-1 text-zinc-200 wrap-anywhere">{show.network?.name || show.webChannel?.name || 'N/A'}</dd>
               </div>
               <div className="col-span-2">
-                <dt className="text-zinc-500">Genres</dt>
+                <dt className="text-zinc-400">Genres</dt>
                 <dd className="mt-1 text-zinc-200 wrap-anywhere">{show.genres?.length ? show.genres.join(' · ') : 'N/A'}</dd>
               </div>
             </dl>

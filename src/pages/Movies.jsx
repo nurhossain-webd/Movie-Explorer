@@ -123,7 +123,7 @@ function Movies() {
               onChange={(event) => updateQuery(event.target.value)}
               placeholder="Search by title…"
               autoComplete="off"
-              className="min-h-14 w-full rounded-xl border border-white/15 bg-zinc-900 px-5 py-4 pr-20 text-base text-zinc-100 placeholder:text-zinc-500 focus:border-amber-300 focus:outline-2 focus:outline-offset-2 focus:outline-amber-300/50 [&::-webkit-search-cancel-button]:appearance-none"
+              className="min-h-14 w-full rounded-xl border border-white/15 bg-zinc-900 px-5 py-4 pr-20 text-base text-zinc-100 placeholder:text-zinc-400 focus:border-amber-300 focus:outline-2 focus:outline-offset-2 focus:outline-amber-300/50 [&::-webkit-search-cancel-button]:appearance-none"
             />
             {query && (
               <button
@@ -136,7 +136,7 @@ function Movies() {
               </button>
             )}
           </div>
-          <p className="mt-3 text-sm text-zinc-500 lg:text-right">
+          <p className="mt-3 text-sm text-zinc-400 lg:text-right">
             Show data by{' '}
             <a href="https://www.tvmaze.com/" className="text-zinc-400 underline underline-offset-4 transition-colors hover:text-amber-300">
               TVMaze

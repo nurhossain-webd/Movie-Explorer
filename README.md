@@ -1,45 +1,115 @@
 # Movie Explorer
 
-A beginner-friendly React assignment. **Step 4 of 5: search and show details.**
+A responsive React assignment for discovering TV shows, searching by title, and
+reading show details. Built with JavaScript and a dark cinema-inspired design.
+The five assignment steps are complete.
 
-## Run locally
+## Submission links
 
-Use Node.js 22.12+ (or a newer supported version).
+- **Live site:** `<YOUR_VERCEL_LIVE_URL>`
+- **GitHub repository:** `<YOUR_GITHUB_REPOSITORY_URL>`
+
+Replace these placeholders with your published URLs before submitting.
+
+## Features
+
+- Home page with a branded navbar, hero banner, Explore Now link, and footer.
+- Movies page with live TVMaze data and a responsive 1–4-column grid.
+- Reusable cards with posters, titles, ratings, premiere years, and See Details.
+- Title search with a 350 ms typing delay and cancellation of outdated requests.
+- Clearing search restores the cached collection for the current page visit.
+- Pagination with 20 shows per page, result ranges, and Previous/Next controls.
+- Loading, retryable error, and empty-result states.
+- Missing ratings/dates display `N/A`; absent or broken images use placeholders.
+- A scrollable details modal with a large poster, plain-text overview, rating,
+  premiere date, genres, language, status, episode length, and network.
+- Close buttons, Escape and backdrop closing, keyboard focus containment and
+  restoration, background scroll locking, and visible focus styles.
+- Mobile, tablet, and desktop layouts, descriptive image alt text, and support
+  for reduced-motion preferences.
+
+## Technologies
+
+- React 19 with JavaScript/JSX
+- React Router 7
+- Tailwind CSS 4
+- Vite 8
+- Oxlint for JavaScript/JSX checks
+- Browser Fetch API and native HTML dialog; no state-management or modal library
+
+## TVMaze API
+
+Base URL: `https://api.tvmaze.com`
+
+| Purpose | Endpoint | Response |
+| --- | --- | --- |
+| Initial collection | `GET /shows` | Array of show objects |
+| Title search | `GET /search/shows?q=<encoded query>` | Array of `{ score, show }` objects |
+
+Search results are normalized before rendering. Details reuse the selected show
+rather than making another request. HTML summaries are parsed in an inert
+HTML template and rendered only as plain text through React.
+
+TVMaze supplies **TV show data**, despite the assignment's Movie Explorer name.
+The initial collection uses the first API index page. The app's 20-item pagination
+splits those fetched results; title searches query TVMaze's wider catalog.
+
+No API key, backend, or environment variables are required. Internet access is
+needed to load shows and posters. Data and images are provided by TVMaze; see
+[TVMaze API documentation and attribution information](https://www.tvmaze.com/api).
+
+## Installation and local development
+
+Install Node.js 22.12 or newer, then open a terminal in the project folder:
 
 ```sh
 npm install
 npm run dev
 ```
 
-Open the local URL printed in your terminal.
+Open the local URL printed by Vite. Keep the terminal running while developing.
+For a reproducible install using the committed lockfile, use `npm ci` in place
+of `npm install`.
+
+## Build and checks
 
 ```sh
-npm run lint     # Check JavaScript and JSX
-npm run build    # Create a production build in dist/
-npm run preview  # Serve the production build locally
+npm run lint
+npm run build
+npm run preview
 ```
 
-## Stack
+The build writes production files to `dist/`. The preview command serves that
+build locally; it is not the production hosting service.
 
-- React with JavaScript and Vite
-- React Router for page navigation
-- Tailwind CSS with the Vite plugin
+For a final manual check, open both routes, follow the navbar and Explore Now
+links, search and clear a title, paginate results, and open/close details using
+buttons, Escape, and the backdrop. Also check small screens, keyboard navigation,
+and the error message with the API request blocked in browser developer tools.
 
-## Structure
+## Project structure
 
 ```text
+public/
+  favicon.svg
 src/
   components/
-    Navbar.jsx    # Shared brand and active navigation links
-    Footer.jsx    # Shared responsive footer
-    MovieCard.jsx # Poster, title, rating, year, and details button
-    MovieDetailsModal.jsx # Accessible native dialog and plain-text overview
+    Navbar.jsx             # Brand and active navigation
+    Footer.jsx             # Footer and copyright
+    MovieCard.jsx          # Reusable listing card
+    MovieDetailsModal.jsx  # Accessible show details and safe summary text
   pages/
-    Home.jsx      # Responsive Discover Movies hero
-    Movies.jsx    # Search, API states, responsive grid, and selected show
-  App.jsx         # Global layout and routes
-  main.jsx        # React entry point and BrowserRouter
-  index.css       # Tailwind import and global styles
+    Home.jsx               # Discover Movies hero
+    Movies.jsx             # Fetching, search, pagination, and selected show
+  App.jsx                  # Shared layout and routes
+  main.jsx                 # React entry point and BrowserRouter
+  index.css                # Tailwind and global styles
+index.html
+vite.config.js
+vercel.json                # Vercel build settings and SPA route fallback
+.oxlintrc.json
+package.json
+package-lock.json
 ```
 
 ## Routes
@@ -47,42 +117,18 @@ src/
 | URL | Page |
 | --- | --- |
 | `/` | Home |
-| `/movies` | Movies |
+| `/movies` | Movies, search, and details modal |
 
-The layout includes visible keyboard focus, a skip-to-content link, and responsive
-navigation. The Home page fills the available space with a dark cinema-style
-gradient hero and an Explore Now link to `/movies`.
+## Deploy to Vercel
 
-The Movies page fetches [TVMaze shows](https://api.tvmaze.com/shows) when mounted
-using `useEffect`, `useState`, and the browser's built-in `fetch`. A failed request
-shows a friendly message and a retry button; requests are cancelled when leaving
-the page. Loading and empty states are also included.
+1. Push this project, including `package-lock.json` and `vercel.json`, to GitHub.
+2. Import the repository into Vercel and select this project folder as the root.
+3. Use the **Vite** framework preset, `npm run build` as the build command, and
+   `dist` as the output directory. Select a supported Node.js version compatible
+   with the installation requirement above. No environment variables are needed.
+4. Deploy, then verify both `/` and `/movies`, including refreshing `/movies`.
+5. Replace the submission link placeholders above with the live and repository URLs.
 
-Cards use a 1/2/3/4-column responsive grid. Missing ratings and premiere dates
-display `N/A`; missing or broken posters display a local placeholder.
-TVMaze provides TV show data despite the assignment's Movie Explorer name.
-
-The search box and TVMaze credit sit beside the Movies heading on desktop and
-stack below it on smaller screens. Both the collection and search results show
-20 shows per page, with Previous/Next controls and a visible result range.
-Pagination uses the fetched results without additional API requests. A new search
-or clearing search resets to page 1; changing pages moves focus to the results.
-
-Search uses `/search/shows?q=<encoded query>` after a 350 ms pause in typing.
-Search results are normalized from `{ score, show }` objects, and outdated
-requests are cancelled so old results cannot replace a newer search. Clearing
-the input restores the collection cached for the current page visit. Empty
-results and failed searches have helpful messages, and failures can be retried.
-
-See Details opens a reusable native `<dialog>` using the already-fetched show
-data. It includes the poster, overview, rating, premiere date, genres, language,
-status, episode length, and network, with fallbacks for missing values. HTML
-summaries are parsed in an inert template and rendered only as plain text.
-
-The modal supports its close buttons, Escape, and backdrop clicks. Keyboard focus
-stays inside and returns to the opening card when closed; background scrolling is
-locked while the modal is open. Its contents scroll within the screen on mobile.
-No additional dependencies or later assignment steps are included.
-
-If deployed to a static host later, configure all page URLs to serve `index.html`
-so React Router works when a page such as `/movies` is opened directly.
+The included rewrite serves `index.html` for React Router routes so direct links
+and refreshes work on Vercel. See the official
+[Vite deployment guide](https://vercel.com/docs/frameworks/frontend/vite#using-vite-to-make-spas).
