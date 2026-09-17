@@ -20,7 +20,8 @@
     @apply bg-amber-300 text-zinc-950;
   }
 
-  a:focus-visible {
+  a:focus-visible,
+  button:focus-visible {
     @apply rounded-sm outline-2 outline-offset-4 outline-amber-300;
   }
 }

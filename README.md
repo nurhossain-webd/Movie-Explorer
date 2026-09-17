@@ -1,6 +1,6 @@
 # Movie Explorer
 
-A beginner-friendly React assignment. **Step 2 of 5: complete Home page.**
+A beginner-friendly React assignment. **Step 3 of 5: TVMaze movie listing.**
 
 ## Run locally
 
@@ -32,9 +32,10 @@ src/
   components/
     Navbar.jsx    # Shared brand and active navigation links
     Footer.jsx    # Shared responsive footer
+    MovieCard.jsx # Poster, title, rating, year, and details placeholder
   pages/
     Home.jsx      # Responsive Discover Movies hero
-    Movies.jsx    # Collection placeholder
+    Movies.jsx    # API fetching, loading/error states, and responsive grid
   App.jsx         # Global layout and routes
   main.jsx        # React entry point and BrowserRouter
   index.css       # Tailwind import and global styles
@@ -49,12 +50,19 @@ src/
 
 The layout includes visible keyboard focus, a skip-to-content link, and responsive
 navigation. The Home page fills the available space with a dark cinema-style
-gradient hero and an Explore Now link to `/movies`. The Movies page intentionally
-displays a coming-soon message.
+gradient hero and an Explore Now link to `/movies`.
 
-API fetching, movie cards, search, and modals are reserved for later steps.
-The planned API is [TVMaze](https://api.tvmaze.com); it supplies TV show data.
-No API connection is implemented in Steps 1–2.
+The Movies page fetches [TVMaze shows](https://api.tvmaze.com/shows) when mounted
+using `useEffect`, `useState`, and the browser's built-in `fetch`. A failed request
+shows a friendly message and a retry button; requests are cancelled when leaving
+the page. Loading and empty states are also included.
+
+Cards use a 1/2/3/4-column responsive grid. Missing ratings and premiere dates
+display `N/A`; missing or broken posters display a local placeholder.
+TVMaze provides TV show data despite the assignment's Movie Explorer name.
+
+Search and the details modal are reserved for later steps. The See Details
+buttons are intentionally disabled until the details interaction is implemented.
 
 If deployed to a static host later, configure all page URLs to serve `index.html`
 so React Router works when a page such as `/movies` is opened directly.
