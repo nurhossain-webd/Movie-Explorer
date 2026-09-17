@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function MovieCard({ show }) {
+function MovieCard({ show, onSeeDetails }) {
   const [imageFailed, setImageFailed] = useState(false)
   const name = show.name || 'Untitled show'
   const poster = show.image?.medium || show.image?.original
@@ -46,13 +46,12 @@ function MovieCard({ show }) {
           </div>
         </dl>
 
-        {/* The details interaction will be added in a later assignment step. */}
         <button
           type="button"
-          disabled
-          title="Show details are coming soon"
-          aria-label={`See Details for ${name} (coming soon)`}
-          className="mt-auto min-h-11 w-full cursor-not-allowed rounded-lg border border-white/10 bg-zinc-800/70 px-4 py-3 text-sm font-medium text-zinc-500"
+          onClick={() => onSeeDetails(show)}
+          aria-label={`See Details for ${name}`}
+          aria-haspopup="dialog"
+          className="mt-auto min-h-11 w-full cursor-pointer rounded-lg border border-amber-300/20 bg-amber-300/10 px-4 py-3 text-sm font-medium text-amber-300 transition-colors hover:border-amber-300/50 hover:bg-amber-300 hover:text-zinc-950 motion-reduce:transition-none"
         >
           See Details
         </button>

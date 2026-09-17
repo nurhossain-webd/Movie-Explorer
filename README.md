@@ -1,6 +1,6 @@
 # Movie Explorer
 
-A beginner-friendly React assignment. **Step 3 of 5: TVMaze movie listing.**
+A beginner-friendly React assignment. **Step 4 of 5: search and show details.**
 
 ## Run locally
 
@@ -32,10 +32,11 @@ src/
   components/
     Navbar.jsx    # Shared brand and active navigation links
     Footer.jsx    # Shared responsive footer
-    MovieCard.jsx # Poster, title, rating, year, and details placeholder
+    MovieCard.jsx # Poster, title, rating, year, and details button
+    MovieDetailsModal.jsx # Accessible native dialog and plain-text overview
   pages/
     Home.jsx      # Responsive Discover Movies hero
-    Movies.jsx    # API fetching, loading/error states, and responsive grid
+    Movies.jsx    # Search, API states, responsive grid, and selected show
   App.jsx         # Global layout and routes
   main.jsx        # React entry point and BrowserRouter
   index.css       # Tailwind import and global styles
@@ -61,8 +62,21 @@ Cards use a 1/2/3/4-column responsive grid. Missing ratings and premiere dates
 display `N/A`; missing or broken posters display a local placeholder.
 TVMaze provides TV show data despite the assignment's Movie Explorer name.
 
-Search and the details modal are reserved for later steps. The See Details
-buttons are intentionally disabled until the details interaction is implemented.
+Search uses `/search/shows?q=<encoded query>` after a 350 ms pause in typing.
+Search results are normalized from `{ score, show }` objects, and outdated
+requests are cancelled so old results cannot replace a newer search. Clearing
+the input restores the collection cached for the current page visit. Empty
+results and failed searches have helpful messages, and failures can be retried.
+
+See Details opens a reusable native `<dialog>` using the already-fetched show
+data. It includes the poster, overview, rating, premiere date, genres, language,
+status, episode length, and network, with fallbacks for missing values. HTML
+summaries are parsed in an inert template and rendered only as plain text.
+
+The modal supports its close buttons, Escape, and backdrop clicks. Keyboard focus
+stays inside and returns to the opening card when closed; background scrolling is
+locked while the modal is open. Its contents scroll within the screen on mobile.
+No additional dependencies or later assignment steps are included.
 
 If deployed to a static host later, configure all page URLs to serve `index.html`
 so React Router works when a page such as `/movies` is opened directly.

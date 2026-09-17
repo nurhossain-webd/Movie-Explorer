@@ -5,6 +5,10 @@
 }
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   :root {
     color-scheme: dark;
     font-synthesis: none;
