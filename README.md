@@ -62,6 +62,12 @@ Cards use a 1/2/3/4-column responsive grid. Missing ratings and premiere dates
 display `N/A`; missing or broken posters display a local placeholder.
 TVMaze provides TV show data despite the assignment's Movie Explorer name.
 
+The search box and TVMaze credit sit beside the Movies heading on desktop and
+stack below it on smaller screens. Both the collection and search results show
+20 shows per page, with Previous/Next controls and a visible result range.
+Pagination uses the fetched results without additional API requests. A new search
+or clearing search resets to page 1; changing pages moves focus to the results.
+
 Search uses `/search/shows?q=<encoded query>` after a 350 ms pause in typing.
 Search results are normalized from `{ score, show }` objects, and outdated
 requests are cancelled so old results cannot replace a newer search. Clearing
