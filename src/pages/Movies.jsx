@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function Movies() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12 sm:px-8 sm:py-16">
+    <div className="mx-auto w-full max-w-6xl px-6 py-12 sm:px-8 sm:py-16">
       <p className="text-xs font-semibold tracking-[0.2em] text-amber-300 uppercase">The collection</p>
       <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Movies</h1>
       <p className="mt-4 text-base leading-7 text-zinc-400">A world of stories, waiting to be explored.</p>
