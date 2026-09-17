@@ -8,9 +8,9 @@ Movie data is fetched dynamically from the **TVMaze API**.
 
 ## 🌐 Live Demo
 
-🔗 **Live Website:** [Add your Vercel deployment link here]
+🔗 **Live Website:** (https://movie-explorer-silk-theta.vercel.app/)
 
-🔗 **GitHub Repository:** [Add your GitHub repository link here]
+🔗 **GitHub Repository:** (https://github.com/nurhossain-webd/Movie-Explorer.git)
 
 ---
 
